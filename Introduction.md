@@ -8,6 +8,47 @@ Edit 的基础操作是 增（Add），删（Delete），改（Modify）。语�
 - MLLM 负责指令与音频/图像的处理，使得得到的隐向量有图像的语义和指令的理解
 - DiT 负责（主要使用 **流匹配** ）得到目标音频/图像
 
+## 目录
+
+本项目的文件结构如下：
+
+### [Audio/](Audio/) — 音频编辑模型（7 个）
+
+| 模型 | 论文 | 翻译 | 总结 | 提取代码 | 核心特点 |
+|------|------|------|------|---------|---------|
+| **[VoiceBox](Audio/VoiceBox/)** | [VoiceBox.pdf](Audio/VoiceBox/VoiceBox.pdf) | [VoiceBox翻译.pdf](Audio/VoiceBox/VoiceBox翻译.pdf) / [VoiceBox翻译.md](Audio/VoiceBox/VoiceBox翻译.md) | [VoiceBox总结.md](Audio/VoiceBox/VoiceBox总结.md) | — | 最早的流匹配语音编辑，Mel谱 + MFA对齐 |
+| **[VoiceCraft](Audio/VoiceCraft/)** | [VoiceCraft.pdf](Audio/VoiceCraft/VoiceCraft.pdf) | [VoiceCraft翻译.pdf](Audio/VoiceCraft/VoiceCraft翻译.pdf) / [VoiceCraft翻译.md](Audio/VoiceCraft/VoiceCraft翻译.md) | [VoiceCraft总结.md](Audio/VoiceCraft/VoiceCraft总结.md) | [code/](Audio/VoiceCraft/code/) (掩码填充 + EnCodec集成) | EnCodec离散token + 掩码填充自回归 |
+| **[Ming-UniAudio](Audio/Ming-UniAudio/)** | [Ming-UniAudio.pdf](Audio/Ming-UniAudio/Ming-UniAudio.pdf) | [Ming-UniAudio翻译.pdf](Audio/Ming-UniAudio/Ming-UniAudio翻译.pdf) / [Ming-UniAudio翻译.md](Audio/Ming-UniAudio/Ming-UniAudio翻译.md) | [Ming-UniAudio总结.md](Audio/Ming-UniAudio/Ming-UniAudio总结.md) | [code/](Audio/Ming-UniAudio/code/) (VAE + LLM+DiT) | 首个指令式通用语音编辑，VAE+LLM+DiT雏形 |
+| **[MMEDIT](Audio/MMEDIT/)** | [MMEDIT.pdf](Audio/MMEDIT/MMEDIT.pdf) | [MMEDIT翻译.pdf](Audio/MMEDIT/MMEDIT翻译.pdf) / [MMEDIT翻译.md](Audio/MMEDIT/MMEDIT翻译.md) | [MMEDIT总结.md](Audio/MMEDIT/MMEDIT总结.md) | [code/](Audio/MMEDIT/code/) (VAE + ALM + MMDiT + 数据集) | ALM + MMDiT，DDPM数学底层，通用音频编辑 |
+| **[Audio-Omni](Audio/Audio-Omni/)** | [Audio-Omni.pdf](Audio/Audio-Omni/Audio-Omni.pdf) | [Audio-Omni翻译.pdf](Audio/Audio-Omni/Audio-Omni翻译.pdf) / [Audio-Omni翻译.md](Audio/Audio-Omni/Audio-Omni翻译.md) | — | [code/](Audio/Audio-Omni/code/) (完整源码) | MLLM + DiT，双流架构验证，ConvNeXtV2字符编码 |
+| **[UNISON](Audio/UNISON/)** | [UNISON.pdf](Audio/UNISON/UNISON.pdf) | [UNISON翻译.pdf](Audio/UNISON/UNISON翻译.pdf) / [UNISON翻译.md](Audio/UNISON/UNISON翻译.md) | — | [code/](Audio/UNISON/code/) (VAE + MLLM深度融合 + DiT) | MLLM全部隐状态深度注入DiT，统一生成与编辑 |
+| **[CosyEdit](Audio/CosyEdit/)** | [CosyEdit.pdf](Audio/CosyEdit/CosyEdit.pdf) | [CosyEdit翻译.pdf](Audio/CosyEdit/CosyEdit翻译.pdf) / [CosyEdit翻译.md](Audio/CosyEdit/CosyEdit翻译.md) | [CosyEdit总结.md](Audio/CosyEdit/CosyEdit总结.md) | [code/](Audio/CosyEdit/code/) (BPE+文本编码器 + S3分词器 + LLM+OICL/ZICL + GOT-CFM) | 基于CosyVoice后训练，OICL/ZICL混合训练，轻量化 |
+
+### [Image/](Image/) — 图像编辑模型（5 个）
+
+| 模型 | 论文 | 翻译 | 总结 | 核心特点 |
+|------|------|------|------|---------|
+| **[OmniGen](Image/OmniGen/)** | — | [OmniGen翻译.pdf](Image/OmniGen/OmniGen翻译.pdf) | [OmniGen总结.md](Image/OmniGen/OmniGen总结.md) | 单流DiT，无MLLM，区域加权损失 |
+| **[Z-Image](Image/Z-Image/)** | [Z-image.pdf](Image/Z-Image/Z-image.pdf) | [Z_Image翻译.pdf](Image/Z-Image/Z_Image翻译.pdf) | — | 单流S³-DiT，3D统一RoPE，少步蒸馏 |
+| **[Qwen-Image-Edit](Image/Qwen-Image-Edit/)** | [Qwen-Image-Edit.pdf](Image/Qwen-Image-Edit/Qwen-Image-Edit.pdf) | [Qwen_Image_Edit翻译.pdf](Image/Qwen-Image-Edit/Qwen_Image_Edit翻译.pdf) | — | 双流MMDiT，单编双解VAE，双编码编辑机制 |
+| **[FireRed-Image-Edit](Image/FireRed-Image-Edit/)** | [FireRed-Image-Edit.pdf](Image/FireRed-Image-Edit/FireRed-Image-Edit.pdf) | [Firered-Image-Edit翻译.pdf](Image/FireRed-Image-Edit/Firered-Image-Edit翻译.pdf) | — | 双流MMDiT，16亿样本数据，DPO强化学习 |
+| **[DreamOmni2](Image/Dreamomni2/)** | [DreamOmni2.pdf](Image/Dreamomni2/DreamOmni2.pdf) | [DreamOmni2翻译.pdf](Image/Dreamomni2/DreamOmni2翻译.pdf) | — | 双流MMDiT，索引编码+位置编码偏移，多参考图 |
+
+### [Formulation/](Formulation/) — 基础理论
+
+| 文件 | 内容 |
+|------|------|
+| [扩散模型.md](Formulation/扩散模型.md) | 扩散模型的数学原理、DDPM公式、训练与采样 |
+| [流匹配损失.md](Formulation/流匹配损失.md) | 流匹配的数学原理、CFM/OT-CFM、与扩散的区别 |
+| [VAE与编码.md](Formulation/VAE与编码.md) | VAE原理、离散token（声学/语义）与连续表示的对比 |
+
+### 其他文件
+
+- **Introduction.md**：本文档，项目总览与发展综述
+- **.gitignore**：Git 忽略规则
+
+---
+
 ## 音频编辑模型的发展综述
 
 2023 年，流匹配的框架被 Meta 提出。**VoiceBox** 是 Meta 随后提出的、最早期的语音编辑模型之一，它提供了一个语音编辑任务范式：
